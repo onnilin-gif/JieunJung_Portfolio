@@ -512,44 +512,6 @@ section {
   padding: 0;
 }
 
-.portfolio-details-lightbox {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 30px;
-}
-
-.portfolio-details-container {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-}
-
-.portfolio-details-container h2 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-.portfolio-details-container p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.portfolio-details-container ul {
-  list-style: none;
-  padding: 0;
-}
-
-.portfolio-details-container ul li {
-  margin-bottom: 20px;
-}
-
-.portfolio-details-container ul li strong {
-  font-size: 18px;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 10px;
-}
 
 /*--------------------------------------------------------------
 # Services
