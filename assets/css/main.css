@@ -1,0 +1,79 @@
+:root{
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #555555;
+  --link: #0a58ca;
+  --accent: #0d6efd;
+  --surface: #f6f7f9;
+  --maxw: 72ch;
+  --radius: 14px;
+}
+ @media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b0c0f; --fg:#eaecef; --muted:#9aa4b2;
+    --link:#6aa9ff; --accent:#4c8dff; --surface:#14161a;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font: 16px/1.8 system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", Arial, sans-serif;
+  text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+img,video{max-width:100%; height:auto; border-radius:var(--radius)}
+a{color:var(--link); text-decoration:none}
+a:hover{text-decoration:underline}
+.container{
+  width: min(100% - 3rem, var(--maxw));
+  margin-inline:auto;
+}
+header.site{
+  position:sticky; top:0; z-index:20; backdrop-filter:saturate(180%) blur(8px);
+  background-color: color-mix(in oklab, var(--bg) 80%, transparent);
+  border-bottom:1px solid color-mix(in oklab, var(--fg) 10%, transparent);
+}
+header.site .inner{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+nav a{margin-right:1rem; font-weight:600}
+main{padding:2rem 0}
+h1,h2,h3{line-height:1.25; margin:2rem 0 1rem 0}
+h1{font-size:clamp(1.8rem, 2.6vw, 2.4rem)}
+h2{font-size:clamp(1.4rem, 2.0vw, 1.8rem)}
+h3{font-size:clamp(1.2rem, 1.6vw, 1.4rem)}
+p{margin:0 0 1rem 0; color:var(--fg)}
+.muted{color:var(--muted)}
+button,.btn,a.btn{
+  display:inline-block; padding:.6rem 1rem; border-radius:calc(var(--radius) - 6px);
+  border:1px solid color-mix(in oklab, var(--fg) 15%, transparent);
+  background:var(--surface); color:var(--fg); text-decoration:none; cursor:pointer
+}
+button:hover,.btn:hover{filter:brightness(1.05)}
+.card{
+  padding:1rem 1.2rem; border-radius:var(--radius);
+  background:var(--surface);
+  border:1px solid color-mix(in oklab, var(--fg) 12%, transparent);
+}
+.grid{
+  display:grid; gap:1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+blockquote{
+  margin:1rem 0; padding:.8rem 1rem; border-left:4px solid var(--accent);
+  background: color-mix(in oklab, var(--surface) 85%, transparent);
+}
+code,pre{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
+  border:1px solid color-mix(in oklab, var(--fg) 10%, transparent);
+  border-radius:calc(var(--radius) - 6px);
+}
+pre{padding:1rem; overflow:auto}
+table{width:100%; border-collapse:collapse}
+th,td{padding:.6rem .8rem; border-bottom:1px solid color-mix(in oklab, var(--fg) 12%, transparent)}
+.footer{padding:2rem 0; color:var(--muted); font-size:.95rem}
+.badge{
+  display:inline-block; padding:.2rem .6rem; border-radius:999px; font-size:.85rem;
+  background: color-mix(in oklab, var(--accent) 12%, transparent); color:var(--accent); border:1px solid color-mix(in oklab, var(--accent) 25%, transparent)
+}
+/* 섹션 여백 통일 */
+.section{margin:2.4rem 0}
