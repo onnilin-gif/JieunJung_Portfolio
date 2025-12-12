@@ -13,17 +13,35 @@
     <style>
         /* CSS Variables for High-End Luxury Theme */
         :root {
-            --main-color: #800020; /* Deep Burgundy */
-            --accent-color: #9B111E; /* Rich Ruby for hover effects */
-            --background-color: #121212; /* Dark Gray */
-            --text-color: rgba(255, 255, 255, 0.87);
-            --heading-color: #FFFFFF;
-            --card-background: #1E1E1E;
+            /* Red Mode (Default) */
+            --background-color: #800020;
+            --text-color: #f2f2f2;
+            --heading-color: #ffffff;
+            --main-color: #121212; /* Black for accents */
+            --accent-color: #333333;
+            --card-background: rgba(0,0,0,0.1);
+            --sidebar-bg: rgba(0,0,0,0.2);
+            --sidebar-link-color: #f2f2f2;
+            --sidebar-link-hover-color: #ffffff;
             
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Montserrat', 'Noto Sans KR', sans-serif;
 
+            --sidebar-width: 280px;
             --transition-speed: 0.3s;
+        }
+
+        body.black-mode {
+            /* Black Mode */
+            --background-color: #121212;
+            --text-color: rgba(255, 255, 255, 0.87);
+            --heading-color: #FFFFFF;
+            --main-color: #800020; /* Deep Burgundy for accents */
+            --accent-color: #9B111E;
+            --card-background: #1E1E1E;
+            --sidebar-bg: #1E1E1E;
+            --sidebar-link-color: rgba(255, 255, 255, 0.87);
+            --sidebar-link-hover-color: #ffffff;
         }
 
         /* --- Global Styles & Resets --- */
@@ -44,6 +62,11 @@
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
         }
 
         a {
@@ -69,7 +92,7 @@
         }
 
         section {
-            padding: 6rem 0;
+            padding: 6rem 2rem;
         }
 
         .section-title {
@@ -97,19 +120,24 @@
         .falling-stars {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
             height: 100vh;
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
         }
 
         .star {
             position: absolute;
-            background-color: var(--main-color);
+            /* In Red mode, stars should be a lighter color */
+            background-color: rgba(255, 255, 255, 0.5); 
             border-radius: 50%;
             opacity: 0.7;
             animation: fall linear infinite;
+        }
+
+        body.black-mode .star {
+             background-color: var(--main-color);
         }
 
         @keyframes fall {
@@ -162,68 +190,95 @@
         }
 
 
-        /* --- Navigation Bar --- */
-        .navbar {
+        /* --- Sidebar Navigation --- */
+        .sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            padding: 1.5rem 0;
-            z-index: 1000;
-            transition: background-color var(--transition-speed) ease, padding var(--transition-speed) ease;
-        }
-        
-        .navbar.scrolled {
-            padding: 1rem 0;
-            background-color: rgba(18, 18, 18, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-container {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            padding: 2rem;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             align-items: center;
+            text-align: center;
+            z-index: 1000;
+            transition: background-color var(--transition-speed) ease;
         }
 
-        .nav-logo {
+        .sidebar-logo {
             font-family: var(--font-heading);
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--heading-color);
             font-weight: 700;
+            margin-bottom: 3rem;
         }
 
-        .nav-menu {
-            display: flex;
+        .sidebar-nav {
             list-style: none;
-            gap: 2.5rem;
         }
 
-        .nav-link {
-            color: var(--text-color);
+        .sidebar-nav li {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-nav a {
+            color: var(--sidebar-link-color);
             font-weight: 500;
+            font-size: 1.1rem;
             position: relative;
             padding-bottom: 0.5rem;
+            transition: color var(--transition-speed) ease;
         }
         
-        .nav-link::after {
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            color: var(--sidebar-link-hover-color);
+        }
+
+        .sidebar-nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 80%;
             height: 2px;
-            background-color: var(--main-color);
-            transform: scaleX(0);
-            transform-origin: bottom right;
+            background-color: var(--sidebar-link-hover-color);
             transition: transform 0.25s ease-out;
         }
 
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
+        .sidebar-nav a:hover::after, .sidebar-nav a.active::after {
+            transform: translateX(-50%) scaleX(1);
         }
+        
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--sidebar-link-color);
+            color: var(--sidebar-link-color);
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--sidebar-link-hover-color);
+            color: var(--sidebar-link-hover-color);
+            transform: scale(1.1) rotate(15deg);
+        }
+        
+        .theme-toggle .icon-moon { display: none; }
+        .theme-toggle .icon-sun { display: block; }
+        body.black-mode .theme-toggle .icon-moon { display: block; }
+        body.black-mode .theme-toggle .icon-sun { display: none; }
+
 
         /* --- Hero Section --- */
         .hero {
@@ -480,6 +535,23 @@
 </head>
 <body>
 
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div>
+            <a href="#hero" class="sidebar-logo">JieunJung</a>
+            <ul class="sidebar-nav">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <span class="icon-sun">☀️</span>
+            <span class="icon-moon">🌙</span>
+        </button>
+    </aside>
+
     <!-- Falling Stars Animation Container -->
     <div class="falling-stars">
         <div class="star"></div>
@@ -489,22 +561,11 @@
         <div class="star"></div>
     </div>
 
-    <!-- Header & Navigation -->
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="#hero" class="nav-logo">JieunJung</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
+    <!-- Main Content -->
+    <div class="main-content">
+        <main>
+            <!-- Hero Section -->
+            <section id="hero" class="hero">
             <div class="hero-content">
                 <h1>JieunJung</h1>
                 <p>Elegant Code, Creative Solutions.</p>
@@ -641,44 +702,69 @@
 
     <script src="vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script>
-        // Simple script for navbar glassmorphism effect on scroll
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Theme Toggler ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
 
-        // Init Isotope for project filtering
-        window.addEventListener('load', () => {
+            // Apply saved theme on load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'black') {
+                body.classList.add('black-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('black-mode');
+                // Save theme preference
+                if (body.classList.contains('black-mode')) {
+                    localStorage.setItem('theme', 'black');
+                } else {
+                    localStorage.removeItem('theme');
+                }
+            });
+
+            // --- Isotope Project Filtering ---
             const projectsGrid = document.querySelector('.projects-grid');
             if (projectsGrid) {
                 const iso = new Isotope(projectsGrid, {
                     itemSelector: '.project-card',
-                    layoutMode: 'fitRows',
-                    percentPosition: true
+                    layoutMode: 'fitRows'
                 });
 
                 const filterBtns = document.querySelector('.project-filters');
                 if (filterBtns) {
                     filterBtns.addEventListener('click', (event) => {
-                        if (!event.target.matches('button')) {
-                            return;
-                        }
+                        if (!event.target.matches('button')) return;
+                        
                         const filterValue = event.target.getAttribute('data-filter');
                         iso.arrange({ filter: filterValue });
 
-                        // Update active button state
-                        const currentActive = filterBtns.querySelector('.active');
-                        if(currentActive) {
-                            currentActive.classList.remove('active');
-                        }
+                        filterBtns.querySelector('.active').classList.remove('active');
                         event.target.classList.add('active');
                     });
                 }
             }
+
+            // --- Active Nav Link on Scroll ---
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -70% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
         });
     </script>
 
