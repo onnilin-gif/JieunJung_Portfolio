@@ -93,6 +93,75 @@
             background: var(--main-color);
         }
 
+        /* --- Falling Stars Animation --- */
+        .falling-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: var(--main-color);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-20vh) rotate(0deg);
+            }
+            to {
+                transform: translateY(120vh) rotate(360deg);
+            }
+        }
+
+        .star:nth-child(1) {
+            width: 7px;
+            height: 7px;
+            left: 10%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+
+        .star:nth-child(2) {
+            width: 5px;
+            height: 5px;
+            left: 30%;
+            animation-duration: 9s;
+            animation-delay: 5s;
+        }
+
+        .star:nth-child(3) {
+            width: 8px;
+            height: 8px;
+            left: 50%;
+            animation-duration: 15s;
+            animation-delay: 0s;
+        }
+
+        .star:nth-child(4) {
+            width: 6px;
+            height: 6px;
+            left: 70%;
+            animation-duration: 10s;
+            animation-delay: 8s;
+        }
+
+        .star:nth-child(5) {
+            width: 5px;
+            height: 5px;
+            left: 90%;
+            animation-duration: 13s;
+            animation-delay: 3s;
+        }
+
+
         /* --- Navigation Bar --- */
         .navbar {
             position: fixed;
@@ -324,6 +393,15 @@
     </style>
 </head>
 <body>
+
+    <!-- Falling Stars Animation Container -->
+    <div class="falling-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
 
     <!-- Header & Navigation -->
     <header class="navbar">
